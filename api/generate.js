@@ -10,13 +10,10 @@ export default async function handler(req, res) {
     const { html } = req.body;
     if (!html) return res.status(400).json({ error: 'Missing HTML content' });
 
-    // Using v121.0.0 which has the missing libnss3.so file built-in for Node 20!
     const browser = await puppeteer.launch({
-      args: chromium.args,
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(
-        'https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar'
-      ),
+      executablePath: await chromium.executablePath(),
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
