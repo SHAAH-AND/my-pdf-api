@@ -10,12 +10,12 @@ export default async function handler(req, res) {
     const { html } = req.body;
     if (!html) return res.status(400).json({ error: 'Missing HTML content' });
 
-    // Launch the invisible Chromium browser using a remote pack to bypass 50MB limit
+    // Use the v119 pack to perfectly match our lightweight dependencies
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(
-        'https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar'
+        'https://github.com/Sparticuz/chromium/releases/download/v119.0.2/chromium-v119.0.2-pack.tar'
       ),
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
